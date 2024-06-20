@@ -25,7 +25,9 @@ class Memory:
             case "huggingface":
                 from langchain.embeddings import HuggingFaceEmbeddings
                 _embeddings = HuggingFaceEmbeddings()
-
+            case "mistralai":
+                from langchain_mistralai import MistralAIEmbeddings
+                _embeddings = MistralAIEmbeddings(mistral_api_key=os.environ["MISTRAL_API_KEY"])
             case _:
                 raise Exception("Embedding provider not found.")
 

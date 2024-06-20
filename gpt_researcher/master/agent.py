@@ -171,10 +171,14 @@ class GPTResearcher:
         """
         context = []
         # Generate Sub-Queries including original query
-        sub_queries = await get_sub_queries(query=query, agent_role_prompt=self.role,
-                                            cfg=self.cfg, parent_query=self.parent_query,
-                                            report_type=self.report_type, cost_callback=self.add_costs)
-
+        try:
+            sub_queries = await get_sub_queries(query=query, agent_role_prompt=self.role,
+                                                cfg=self.cfg, parent_query=self.parent_query,
+                                                report_type=self.report_type, cost_callback=self.add_costs)
+        except Exception as e: 
+            sub_queries = [] 
+        
+        
         # If this is not part of a sub researcher, add original query to research for better results
         if self.report_type != "subtopic_report":
             sub_queries.append(query)
